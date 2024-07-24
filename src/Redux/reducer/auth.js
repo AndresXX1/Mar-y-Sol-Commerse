@@ -3,7 +3,7 @@ import axios from 'axios';
 import parseJwt from '../../utils/jwtUtils';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000', // Ajusta esto según tu configuración de backend
+  baseURL: 'http://localhost:3001', // Ajusta esto según tu configuración de backend
 });
 
 export const registerUser = createAsyncThunk(

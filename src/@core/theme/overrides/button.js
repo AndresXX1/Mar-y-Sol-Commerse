@@ -16,19 +16,18 @@ const Button = theme => {
         contained: {
           boxShadow: theme.shadows[3],
           padding: `${theme.spacing(1.875, 5.5)}`,
-          backgroundColor: '#0074D9', 
+          backgroundColor: '#FF6347', // Naranja
           '&:hover': {
-            backgroundColor: '#005699', 
+            backgroundColor: '#E5533D', // Naranja oscuro
           },
-         
-          border: '2px solid #0074D9',
-          boxShadow: '0 0 10px #0074D9, 0 0 5px #0074D9',
+          border: '2px solid #FF6347', // Naranja
+          boxShadow: '0 0 10px #FF6347, 0 0 5px #FF6347', // Naranja
         },
         outlined: {
           padding: `${theme.spacing(1.625, 5.25)}`,
-          borderColor: '#0074D9', 
+          borderColor: '#FF6347', // Naranja
           '&:hover': {
-            borderColor: '#005699', 
+            borderColor: '#E5533D', // Naranja oscuro
           },
         },
         sizeSmall: {

@@ -27,7 +27,7 @@ export const fetchBookings = createAsyncThunk('bookings/fetchBookings', async ()
 });
 
 export const fetchBuildings = createAsyncThunk('buildings/fetchBuildings', async () => {
-  const response = await axios.get('/api/buildings');
+  const response = await axios.get('/collection');
 
   return response.data;
 

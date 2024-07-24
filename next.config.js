@@ -17,8 +17,8 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/api/:path*', // Ruta en tu aplicación Next.js
-        destination: 'https://optimo-back-end.onrender.com/:path*', // Ruta en tu backend
+        source: '/:path*', // Ruta en tu aplicación Next.js
+        destination: 'http://localhost:3001/:path*', // Ruta en tu backend
       },
     ];
   },

@@ -11,10 +11,10 @@
 
   --primary-glow: conic-gradient(
     from 180deg at 50% 50%,
-    #16abff33 0deg,
-    #0885ff33 55deg,
-    #54d6ff33 120deg,
-    #0071ff33 160deg,
+    #FF634733 0deg,  /* Naranja claro con transparencia */
+    #E5533D33 55deg, /* Naranja oscuro con transparencia */
+    #FF7F5033 120deg, /* Naranja medio con transparencia */
+    #FF634733 160deg, /* Naranja claro con transparencia */
     transparent 360deg
   );
   --secondary-glow: radial-gradient(
@@ -46,12 +46,12 @@
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
 
-    --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
+    --primary-glow: radial-gradient(rgba(255, 99, 71, 0.4), rgba(255, 99, 71, 0)); /* Naranja */
     --secondary-glow: linear-gradient(
       to bottom right,
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0.3)
+      rgba(255, 99, 71, 0),
+      rgba(255, 99, 71, 0),
+      rgba(255, 99, 71, 0.3) /* Naranja */
     );
 
     --tile-start-rgb: 2, 13, 46;
@@ -105,5 +105,3 @@ a {
     color-scheme: dark;
   }
 }
-
-

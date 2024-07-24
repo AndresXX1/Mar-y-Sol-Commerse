@@ -1,6 +1,6 @@
 const themeConfig = {
   // ** Layout Configs
-  templateName: 'Optimo' /* App Name */,
+  templateName: 'Mar y Sol' /* App Name */,
   mode: 'dark' /* light | dark */,
   contentWidth: 'boxed' /* full | boxed */,
   // ** Routing Configs

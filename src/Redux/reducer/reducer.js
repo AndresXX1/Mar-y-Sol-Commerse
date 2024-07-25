@@ -35,7 +35,7 @@ export const fetchBuildings = createAsyncThunk('buildings/fetchBuildings', async
 
 export const updateBuilding = createAsyncThunk('buildings/updateBuilding', async ({ id, updatedBuilding }) => {
     try {
-      const response = await axios.patch(`/api/buildings/${id}`, updatedBuilding);
+      const response = await axios.patch(`/collection/${id}`, updatedBuilding);
 
       return response.data;
 

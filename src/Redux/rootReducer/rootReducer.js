@@ -3,7 +3,7 @@ import userReducer from '../reducer/reducer'; // Asegúrate de que la ruta sea c
 import roomsSlice from '../reducer/rooms';
 import authSlice from "../reducer/auth"
 import updateUsersSlice from "../reducer/updateUser"
-import buildingsSlice from "../reducer/building"
+import collectionsSlice from "../reducer/collection"
 import bookingsSlice from "../reducer/bookings"
 
 const rootReducer = combineReducers({
@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   rooms: roomsSlice,
   auth: authSlice, 
   updateUser: updateUsersSlice,
-  building: buildingsSlice,
+  collection: collectionsSlice,
   bookings:bookingsSlice
 
 });

@@ -18,7 +18,7 @@ module.exports = {
     return [
       {
         source: '/:path*', // Ruta en tu aplicación Next.js
-        destination: 'http://localhost:3002/:path*', // Ruta en tu backend
+        destination: 'http://localhost:3001/:path*', // Ruta en tu backend
       },
     ];
   },

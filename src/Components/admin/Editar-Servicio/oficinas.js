@@ -18,7 +18,7 @@ import {
 import { Widget } from 'cloudinary-react';
 import CloseIcon from '@mui/icons-material/Close';
 import BuildingSelect2 from './selectbuilding';
-import { fetchBuildingById } from '../../../Redux/reducer/building';
+import { fetchCollectionById } from '../../../Redux/reducer/building';
 import { createRoom } from '../../../Redux/reducer/rooms';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';

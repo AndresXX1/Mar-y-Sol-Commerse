@@ -3,40 +3,40 @@ import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
 
 import { useDispatch } from 'react-redux';
-import { setSelectedBuildingId } from '../../../Redux/reducer/rooms';
+import { setSelectedCollectionId } from '../../../Redux/reducer/products';
 
-const Selecteeed = ({ onSelectBuilding }) => {
-    const [buildings, setBuildings] = useState([]);
+const Selecteeed = ({ onSelectcollection }) => {
+    const [collections, setcollections] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selectedBuildingId, setSelectedBuildingIdLocal] = useState('');
+    const [selectedcollectionId, setSelectedcollectionIdLocal] = useState('');
     const dispatch = useDispatch();
     
     useEffect(() => {
-        const fetchBuildingNames = async () => {
+        const fetchcollectionNames = async () => {
             try {
-                const response = await axios.get('/api/buildings');
-                setBuildings(response.data);
+                const response = await axios.get('/collection');
+                setcollections(response.data);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching building names:', error);
+                console.error('Error fetching collection names:', error);
                 setLoading(false);
             }
         };
 
-        fetchBuildingNames();
+        fetchcollectionNames();
       }, []);
       
-      const selectedBuilding = buildings.find(building => building._id === selectedBuildingId);
-      const selectedBuildingName = selectedBuilding ? selectedBuilding.name : '';
+      const selectedcollection = collections.find(collection => collection._id === selectedcollectionId);
+      const selectedcollectionName = selectedcollection ? selectedcollection.name : '';
 
-    const handleBuildingChange = (event) => {
+    const handlecollectionChange = (event) => {
 
         const selectedId = event.target.value;
-        console.log("Selected Building ID:", selectedId);
-        setSelectedBuildingIdLocal(selectedId);
-        dispatch(setSelectedBuildingId(selectedId));
-        onSelectBuilding(selectedId);
-        console.log("Fetching rooms for building ID:", selectedId);
+        console.log("Selected collection ID:", selectedId);
+        setSelectedcollectionIdLocal(selectedId);
+        dispatch(setSelectedCollectionId(selectedId));
+        onSelectcollection(selectedId);
+        console.log("Fetching products for collection ID:", selectedId);
     };
 
     if (loading) {
@@ -46,20 +46,20 @@ const Selecteeed = ({ onSelectBuilding }) => {
     return (
       <div>
          <div style={{marginBottom:"35px"}}>
-          <h2 >Oficinas de {selectedBuildingName}</h2>
+          <h2 >Coleccion:  {selectedcollectionName}</h2>
          </div>
       <FormControl fullWidth>
           <InputLabel >Edificio</InputLabel>
           <Select
-              labelId="building-select-label"
-              id="building-select"
-              value={selectedBuildingId}
-              onChange={handleBuildingChange}
+              labelId="collection-select-label"
+              id="collection-select"
+              value={selectedcollectionId}
+              onChange={handlecollectionChange}
               fullWidth
           >
               
-              {buildings.map(building => (
-                  <MenuItem key={building._id} value={building._id}>{building.name}</MenuItem>
+              {collections.map(collection => (
+                  <MenuItem key={collection._id} value={collection._id}>{collection.name}</MenuItem>
               ))}
           </Select>
       </FormControl>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBuildingById } from "../../../Redux/reducer/building";
-import { updateBuilding } from "../../../Redux/reducer/reducer";
+import { fetchCollectionById } from "../../../Redux/reducer/collection";
+import { updatecollection } from "../../../Redux/reducer/reducer";
 import axios from 'axios';
 import React from 'react';
 
@@ -44,29 +44,27 @@ const TabAccount = () => {
   const [imageFile, setImageFile] = useState(null);
 
   const [formData, setFormData] = useState({
-
     name: '',
-    address: '',
-    country: '',
-    city: '',
+    seasson: '',
+    description: '',
   });
 
   const dispatch = useDispatch();
-  const building = useSelector((state) => state.building.building);
+  const collection = useSelector((state) => state.collection.collection);
 
   useEffect(() => {
-    if (building) {
-      console.log('Fetched Building Data:', building);
-      setImgSrc(building.blueprints || '/images/logos/iconocam.png');
+    if (collection) {
+      console.log('Fetched collection Data:', collection);
+      setImgSrc(collection.blueprints || '/images/logos/iconocam.png');
       setFormData({
-        name: building.name || '',
-        address: building.address || '',
-        country: building.country || '',
-        city: building.city || '',
-        blueprints: building.blueprints || "",
+        name: collection.name || '',
+        seasson: collection.seasson || '',
+        description: collection.description || '',
       });
     }
-  }, [building]);
+  }, [collection]);
+
+  console.log("dsdsdasds", collection?.name)
 
   const onChange = (file) => {
     const reader = new FileReader();
@@ -78,9 +76,9 @@ const TabAccount = () => {
     }
   };
 
-  const handleBuildingSelect = (id) => {
-    dispatch(fetchBuildingById(id));
-    console.log('Selected Building ID:', id);
+  const handlecollectionSelect = (id) => {
+    dispatch(fetchCollectionById(id));
+    console.log('Selected collection ID:', id);
   };
 
   const handleInputChange = (e) => {
@@ -99,25 +97,23 @@ const TabAccount = () => {
       const formData = new FormData();
       formData.append('file', imageFile);
       formData.append('upload_preset', 'osbs0ds6');
-      formData.append('cloud_name', 'dot1uumxf'); 
+      formData.append('cloud_name', 'dot1uumxf');
       try {
         const response = await axios.post('https://api.cloudinary.com/v1_1/dot1uumxf/image/upload', formData);
         updatedFormData.blueprints = response.data.secure_url;
       } catch (error) {
         toast.error('Error uploading image', { autoClose: 2000, onClose: () => window.location.reload() });
-        
         return;
-
       }
     }
 
-    console.log('Updated Form Data:', updatedFormData); 
+    console.log('Updated Form Data:', updatedFormData);
 
     try {
-      await dispatch(updateBuilding({ id: building._id, updatedBuilding: updatedFormData }));
-      toast.success('Building updated successfully', { autoClose: 1200, onClose: () => window.location.reload() });
+      await dispatch(updatecollection({ id: collection._id, updatedcollection: updatedFormData }));
+      toast.success('Collection updated successfully', { autoClose: 1200, onClose: () => window.location.reload() });
     } catch (error) {
-      toast.error('Error updating building', { autoClose: 1200, onClose: () => window.location.reload() });
+      toast.error('Error updating collection', { autoClose: 1200, onClose: () => window.location.reload() });
     }
   };
 
@@ -125,9 +121,9 @@ const TabAccount = () => {
     <CardContent>
       <ToastContainer />
       <form onSubmit={handleSubmit}>
-      <Selecteeed onSelectBuilding={handleBuildingSelect} />
+        <Selecteeed onSelectcollection={handlecollectionSelect} />
         <Typography style={{ marginTop: '10px', marginBottom: '20px' }} variant="h6" gutterBottom>
-          Seleccione un Servicio
+          Seleccione una Coleccion
         </Typography>
         <Grid container spacing={7}>
           <Grid item xs={12} sx={{ marginTop: 4.8, marginBottom: 3 }}>
@@ -135,7 +131,7 @@ const TabAccount = () => {
               <ImgStyled src={imgSrc} alt='Profile Pic' sx={{ width: "300px" }} />
               <Box style={{ marginLeft: '30px' }}>
                 <ButtonStyled component='label' variant='contained' htmlFor='account-settings-upload-image'>
-                  Cambia la imagen del servicio
+                  Cambia la imagen de la coleccion
                   <input
                     hidden
                     type='file'
@@ -158,53 +154,34 @@ const TabAccount = () => {
             <TextField
               fullWidth
               label='Nombre'
-              placeholder='Ej: complejo Esperanza'
+              placeholder={collection?.name || 'Ej: complejo Esperanza'}
               name='name'
               value={formData.name}
               onChange={handleInputChange}
+              
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
-              label='Direccion'
-              placeholder='Ej:Siempreviva 127'
-              name='address'
-              value={formData.address}
+              label='Temporada'
+              placeholder={collection?.seasson || 'Ej: Primavera'}
+              name='seasson'
+              value={formData.seasson}
               onChange={handleInputChange}
             />
           </Grid>
 
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel id='form-layouts-separator-select-label'>Pais</InputLabel>
-              <Select
-                label='Country'
-                id='form-layouts-separator-select'
-                labelId='form-layouts-separator-select-label'
-                name='country'
-                value={formData.country}
-                onChange={handleInputChange}
-              >
-                <MenuItem value='Argentina'>Argentina</MenuItem>
-                <MenuItem value='Colombia'>Colombia</MenuItem>
-                <MenuItem value='Ecuador'>Ecuador</MenuItem>
-                <MenuItem value='Chile'>Chile</MenuItem>
-                <MenuItem value='Venezuela'>Venezuela</MenuItem>
-                <MenuItem value='Uruguay'>Uruguay</MenuItem>
-                <MenuItem value='Bolivia'>Bolivia</MenuItem>
-                <MenuItem value='Peru'>Peru</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12}>
             <TextField
               fullWidth
-              label='Ciudad'
-              placeholder='Ej: La pampa'
-              name='city'
-              value={formData.city}
+              label='Descripción'
+              placeholder={collection?.description || 'Ej: Descripción del servicio'}
+              name='description'
+              value={formData.description}
               onChange={handleInputChange}
+              multiline
+              rows={4}
             />
           </Grid>
         </Grid>

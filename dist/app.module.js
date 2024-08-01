@@ -12,10 +12,10 @@ const mongoose_1 = require("@nestjs/mongoose");
 const auth_module_1 = require("./auth/auth.module");
 const user_module_1 = require("./user/user.module");
 const bookings_module_1 = require("./bookings/bookings.module");
-const rooms_module_1 = require("./rooms/rooms.module");
+const products_module_1 = require("./products/products.module");
 const mailer_module_1 = require("./mailer/mailer.module");
 const config_1 = require("@nestjs/config");
-const buildings_module_1 = require("./buildings/buildings.module");
+const collections_module_1 = require("./collections/collections.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -28,9 +28,9 @@ exports.AppModule = AppModule = __decorate([
             mongoose_1.MongooseModule.forRoot('mongodb+srv://optimo123:optimo123@optimo.zlmwo9b.mongodb.net/?retryWrites=true&w=majority&appName=Optimo'),
             auth_module_1.AuthModule,
             user_module_1.UserModule,
-            buildings_module_1.BuildingsModule,
+            collections_module_1.collectionsModule,
             bookings_module_1.BookingsModule,
-            rooms_module_1.RoomsModule,
+            products_module_1.productsModule,
             mailer_module_1.MailerModule,
         ],
     })

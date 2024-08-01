@@ -4,29 +4,29 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBuildings, updateBuilding } from '../../../Redux/reducer/reducer.js'; // Importa updateBuilding
+import { fetchCollection, updatecollection } from '../../../Redux/reducer/reducer.js'; // Importa updatecollection
 
-const BuildingsComponent = () => {
-  const [editableBuildingId, setEditableBuildingId] = useState(null);
-  const [editableBuildingValues, setEditableBuildingValues] = useState({});
+const collectionsComponent = () => {
+  const [editablecollectionId, setEditablecollectionId] = useState(null);
+  const [editablecollectionValues, setEditablecollectionValues] = useState({});
   const [modifiedFields, setModifiedFields] = useState({});
 
   const dispatch = useDispatch();
-  const buildingsFromRedux = useSelector((state) => state.users.entities);
+  const collectionsFromRedux = useSelector((state) => state.users.entities);
 
   useEffect(() => {
-    dispatch(fetchBuildings());
+    dispatch(fetchCollection());
   }, [dispatch]);
 
-  const handleEdit = (buildingId) => {
-    setEditableBuildingId(buildingId);
-    const building = buildingsFromRedux.find(building => building._id === buildingId);
-    setEditableBuildingValues(building);
+  const handleEdit = (collectionId) => {
+    setEditablecollectionId(collectionId);
+    const collection = collectionsFromRedux.find(collection => collection._id === collectionId);
+    setEditablecollectionValues(collection);
     setModifiedFields({});
   };
 
   const handleInputChange = (field, value) => {
-    setEditableBuildingValues(prevValues => ({
+    setEditablecollectionValues(prevValues => ({
       ...prevValues,
       [field]: value
     }));
@@ -39,8 +39,8 @@ const BuildingsComponent = () => {
   const handleSave = async () => {
     if (window.confirm('¿Estás seguro de que quieres guardar los cambios?')) {
       try {
-        const updatedFields = Object.keys(modifiedFields).filter(key => key !== '_id').filter(key => key in editableBuildingValues).reduce((acc, key) => {
-          acc[key] = editableBuildingValues[key];
+        const updatedFields = Object.keys(modifiedFields).filter(key => key !== '_id').filter(key => key in editablecollectionValues).reduce((acc, key) => {
+          acc[key] = editablecollectionValues[key];
 
           return acc;
 
@@ -48,16 +48,16 @@ const BuildingsComponent = () => {
   
         console.log('Objeto a enviar al backend:', updatedFields); 
   
-        await dispatch(updateBuilding({ id: editableBuildingValues._id, updatedBuilding: updatedFields })); 
-        setEditableBuildingId(null);
+        await dispatch(updatecollection({ id: editablecollectionValues._id, updatedcollection: updatedFields })); 
+        setEditablecollectionId(null);
       } catch (error) {
-        console.error('Error updating building:', error);
+        console.error('Error updating collection:', error);
       }
     }
   };
 
   const handleCancel = () => {
-    setEditableBuildingId(null);
+    setEditablecollectionId(null);
   };
 
   
@@ -79,86 +79,86 @@ const BuildingsComponent = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {buildingsFromRedux && buildingsFromRedux.map(building => (
-              <TableRow key={building._id}>
+            {collectionsFromRedux && collectionsFromRedux.map(collection => (
+              <TableRow key={collection._id}>
                 <TableCell>
-                  {editableBuildingId === building._id ? (
+                  {editablecollectionId === collection._id ? (
                     <TextField
-                      value={editableBuildingValues.name}
+                      value={editablecollectionValues.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
                     />
                   ) : (
-                    building.name
+                    collection.name
                   )}
                 </TableCell>
                 <TableCell>
-                  {editableBuildingId === building._id ? (
+                  {editablecollectionId === collection._id ? (
                     <TextField
-                      value={editableBuildingValues.address}
+                      value={editablecollectionValues.address}
                       onChange={(e) => handleInputChange('address', e.target.value)}
                     />
                   ) : (
-                    building.address
+                    collection.address
                   )}
                 </TableCell>
                 <TableCell>
-                  {editableBuildingId === building._id ? (
+                  {editablecollectionId === collection._id ? (
                     <TextField
-                      value={editableBuildingValues.description}
+                      value={editablecollectionValues.description}
                       onChange={(e) => handleInputChange('description', e.target.value)}
                     />
                   ) : (
-                    building.description
+                    collection.description
                   )}
                 </TableCell>
                 <TableCell>
-                  {editableBuildingId === building._id ? (
+                  {editablecollectionId === collection._id ? (
                     <TextField
-                      value={editableBuildingValues.city}
+                      value={editablecollectionValues.city}
                       onChange={(e) => handleInputChange('city', e.target.value)}
                     />
                   ) : (
-                    building.city
+                    collection.city
                   )}
                 </TableCell>
                 <TableCell>
-                  {editableBuildingId === building._id ? (
+                  {editablecollectionId === collection._id ? (
                     <TextField
-                      value={editableBuildingValues.country}
+                      value={editablecollectionValues.country}
                       onChange={(e) => handleInputChange('country', e.target.value)}
                     />
                   ) : (
-                    building.country
+                    collection.country
                   )}
                 </TableCell>
                 <TableCell>
-                  {editableBuildingId === building._id ? (
+                  {editablecollectionId === collection._id ? (
                     <TextField
-                      value={editableBuildingValues.owner}
+                      value={editablecollectionValues.owner}
                       onChange={(e) => handleInputChange('owner', e.target.value)}
                     />
                   ) : (
-                    building.owner
+                    collection.owner
                   )}
                 </TableCell>
                 <TableCell>
-                  {editableBuildingId === building._id ? (
+                  {editablecollectionId === collection._id ? (
                     <TextField
-                      value={editableBuildingValues.numberOfFloors}
+                      value={editablecollectionValues.numberOfFloors}
                       onChange={(e) => handleInputChange('numberOfFloors', e.target.value)}
                     />
                   ) : (
-                    building.numberOfFloors
+                    collection.numberOfFloors
                   )}
                 </TableCell>
                 <TableCell>
-                  {editableBuildingId === building._id ? (
+                  {editablecollectionId === collection._id ? (
                     <div>
                       <Button onClick={handleSave}><SaveIcon /> Guardar</Button>
                       <Button onClick={handleCancel}><CancelIcon /> Cancelar</Button>
                     </div>
                   ) : (
-                    <Button onClick={() => handleEdit(building._id)}><EditIcon /> Editar</Button>
+                    <Button onClick={() => handleEdit(collection._id)}><EditIcon /> Editar</Button>
                   )}
                 </TableCell>
               </TableRow>
@@ -170,4 +170,4 @@ const BuildingsComponent = () => {
   );
 };
 
-export default BuildingsComponent;
+export default collectionsComponent;

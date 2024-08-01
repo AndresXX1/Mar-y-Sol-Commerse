@@ -2,7 +2,7 @@
     {
         "id": 1,
         "Nombre": "Oficina Principal",
-        "Descripcion": "Oficina principal ubicada en La Celeste II, en el Piso 5 del ala Este. Esta oficina es ideal para trabajo diario, reuniones y sesiones de colaboración. Cuenta con un espacio amplio y luminoso, equipado con escritorio, silla de oficina y computadora para una experiencia de trabajo cómoda y productiva.",
+        "Descripcion": "Oficina principal ubicada en La Celeste II, en el Piso 5 del ala Este. Esta oficina es ideal para trabajo diario, reuniones y sesiones de colaboración. Cuenta con un espacio amplio y luminoso, equipado con escritorio, silla de oficina y computadora para una experiencia de trabajo cómoda y productsiva.",
         "Servicio": "La Celeste II",
         "Piso": "Piso 5",
         "Ubicacion": "Ala Este",
@@ -62,7 +62,7 @@
     {
         "id": 6,
         "Nombre": "Salon de muestras",
-        "Descripcion": " Salón de muestras ubicado en La Celeste II, en el Piso 4 del ala Este. Este espacio es perfecto para exposiciones y demostraciones. Con un salón de exposiciones y stands, ofrece un entorno elegante y versátil para presentaciones de productos y eventos promocionales.",
+        "Descripcion": " Salón de muestras ubicado en La Celeste II, en el Piso 4 del ala Este. Este espacio es perfecto para exposiciones y demostraciones. Con un salón de exposiciones y stands, ofrece un entorno elegante y versátil para presentaciones de productsos y eventos promocionales.",
         "Servicio": "La Celeste II",
         "Piso": "Piso 4",
         "Ubicacion": "Ala Este",

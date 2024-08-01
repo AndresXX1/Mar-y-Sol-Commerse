@@ -1,5 +1,5 @@
 import { Booking } from 'src/bookings/schema/booking.schema';
-export declare class CreateRoomDto {
+export declare class createproductsDto {
     name: string;
     booking: Booking[];
     location: string;

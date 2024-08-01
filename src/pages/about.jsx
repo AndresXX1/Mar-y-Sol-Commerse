@@ -26,7 +26,7 @@ function About () {
             }}>
                 <h4>Óptimo nos da la capacidad de visualizar y gestionar el espacio,
                      ya que es esencial para crear lugares de trabajo atractivos, 
-                     productivos y rentables. Por este motivo,
+                     productsivos y rentables. Por este motivo,
                       el software de gestión de espacios Óptimo es la base de toda gestión de instalaciones.
                        Óptimo reúne los planos de planta en una única pantalla interactiva para una planificación del espacio más eficiente.</h4>
 

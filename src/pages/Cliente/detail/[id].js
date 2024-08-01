@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRoomById } from '../../../Redux/reducer/rooms'; 
+import { fetchproductsById } from '../../../Redux/reducer/products'; 
 import ReservationForm from '../../../Components/Cliente/Reserva/reserva';
 import { Box } from '@mui/material';
 import AllEquipmentIcons from '../../../Components/Cliente/EquipamientosIcon/equipamiento';
@@ -10,14 +10,14 @@ function Detail() {
   const dispatch = useDispatch();
   const router = useRouter();
   const roomId = router.query.id; // Obtiene el ID de la habitación desde la URL
-  const room = useSelector((state) => state.rooms.rooms.find((room) => room._id === roomId));
-  const { loading, error } = useSelector((state) => state.rooms);
+  const room = useSelector((state) => state.products.products.find((room) => room._id === roomId));
+  const { loading, error } = useSelector((state) => state.products);
   const [mainImage, setMainImage] = useState(null); // Estado para la imagen principal
   const [plano, setPlano] = useState(null);
 
   useEffect(() => {
     if (roomId) {
-      dispatch(fetchRoomById(roomId)); // Invoca la acción para obtener la habitación por su ID
+      dispatch(fetchproductsById(roomId)); // Invoca la acción para obtener la habitación por su ID
     }
   }, [dispatch, roomId]);
 

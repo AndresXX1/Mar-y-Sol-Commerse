@@ -39,24 +39,24 @@ const TabSecurity = () => {
     'La celeste II': ['Planta Baja']
  });
  const [floorImages, setFloorImages] = useState({});
-  const [selectedBuilding, setSelectedBuilding] = useState('La celeste II');
+  const [selectedcollection, setSelectedcollection] = useState('La celeste II');
 
   const addFloor = () => {
     setFloors(prevFloors => ({
       ...prevFloors,
-      [selectedBuilding]: [...prevFloors[selectedBuilding], `Piso ${prevFloors[selectedBuilding].length}`]
+      [selectedcollection]: [...prevFloors[selectedcollection], `Piso ${prevFloors[selectedcollection].length}`]
     }));
  };
 
  const removeFloor = () => {
     setFloors(prevFloors => ({
       ...prevFloors,
-      [selectedBuilding]: prevFloors[selectedBuilding].slice(0, -1)
+      [selectedcollection]: prevFloors[selectedcollection].slice(0, -1)
     }));
  };
 
- const handleBuildingChange = (event) => {
-    setSelectedBuilding(event.target.value);
+ const handlecollectionChange = (event) => {
+    setSelectedcollection(event.target.value);
  };
 
 
@@ -84,8 +84,8 @@ const TabSecurity = () => {
             <InputLabel id='form-layouts-separator-select-label'>Seleccione</InputLabel>
             <Select
               label='Servicios'
-              value={selectedBuilding}
-              onChange={handleBuildingChange}
+              value={selectedcollection}
+              onChange={handlecollectionChange}
               id='form-layouts-separator-select'
               labelId='form-layouts-separator-select-label'
             >
@@ -152,7 +152,7 @@ const TabSecurity = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {floors[selectedBuilding].map((floor, index) => (
+                {floors[selectedcollection].map((floor, index) => (
                  <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                     <TableCell component="th" scope="row">
                       {floor}

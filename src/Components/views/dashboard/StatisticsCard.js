@@ -31,7 +31,7 @@ const salesData = [
   {
     stats: '1.54k',
     color: 'warning',
-    title: 'Products',
+    title: 'products',
     icon: <CellphoneLink sx={{ fontSize: '1.75rem' }} />
   },
   {

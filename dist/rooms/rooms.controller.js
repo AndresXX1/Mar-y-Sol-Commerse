@@ -12,123 +12,123 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RoomsController = void 0;
+exports.productsController = void 0;
 const common_1 = require("@nestjs/common");
-const rooms_service_1 = require("./rooms.service");
+const products_service_1 = require("./products.service");
 const create_room_dto_1 = require("./dto/create-room.dto");
 const update_room_dto_1 = require("./dto/update-room.dto");
-let RoomsController = class RoomsController {
-    constructor(roomsService) {
-        this.roomsService = roomsService;
+let productsController = class productsController {
+    constructor(productservice) {
+        this.productservice = productservice;
     }
-    create(createRoomDto, buildingId) {
-        return this.roomsService.createRoom(buildingId, createRoomDto);
+    create(createproductsDto, collectionId) {
+        return this.productservice.createproducts(collectionId, createproductsDto);
     }
-    findAllByFloor(buildingId) {
-        return this.roomsService.findAllByBuilding(buildingId);
+    findAllByFloor(collectionId) {
+        return this.productservice.findAllBycollection(collectionId);
     }
-    findAllByBuildingSortedByFloor(buildingId, order) {
-        return this.roomsService.findAllByBuildingSortedByFloor(buildingId, order);
+    findAllBycollectionSortedByFloor(collectionId, order) {
+        return this.productservice.findAllBycollectionSortedByFloor(collectionId, order);
     }
-    findNumberOfRooms() {
-        return this.roomsService.findNumberOfRooms();
+    findNumberOfproducts() {
+        return this.productservice.findNumberOfproducts();
     }
-    findOneByName(buildingId, name) {
-        return this.roomsService.findOneByName(buildingId, name);
+    findOneByName(collectionId, name) {
+        return this.productservice.findOneByName(collectionId, name);
     }
-    findOneById(buildingId, roomId) {
-        return this.roomsService.findOneById(roomId);
+    findOneById(collectionId, roomId) {
+        return this.productservice.findOneById(roomId);
     }
-    update(buildingId, roomId, updateRoomDto) {
-        return this.roomsService.update(buildingId, roomId, updateRoomDto);
+    update(collectionId, roomId, updateproductsDto) {
+        return this.productservice.update(collectionId, roomId, updateproductsDto);
     }
-    remove(buildingId, roomId) {
-        return this.roomsService.remove(buildingId, roomId);
+    remove(collectionId, roomId) {
+        return this.productservice.remove(collectionId, roomId);
     }
     findRanking() {
-        return this.roomsService.rankingRoomsByBookings();
+        return this.productservice.rankingproductsByBookings();
     }
-    findAvailableRooms() {
-        return this.roomsService.filterByDaysAndHours();
+    findAvailableproducts() {
+        return this.productservice.filterByDaysAndHours();
     }
 };
-exports.RoomsController = RoomsController;
+exports.productsController = productsController;
 __decorate([
-    (0, common_1.Post)(':buildingId/types'),
+    (0, common_1.Post)(':collectionId/types'),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Param)('buildingId')),
+    __param(1, (0, common_1.Param)('collectionId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_room_dto_1.CreateRoomDto, String]),
+    __metadata("design:paramtypes", [create_room_dto_1.createproductsDto, String]),
     __metadata("design:returntype", void 0)
-], RoomsController.prototype, "create", null);
+], productsController.prototype, "create", null);
 __decorate([
-    (0, common_1.Get)('/findByBuilding/:buildingId'),
-    __param(0, (0, common_1.Param)('buildingId')),
+    (0, common_1.Get)('/findBycollection/:collectionId'),
+    __param(0, (0, common_1.Param)('collectionId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], RoomsController.prototype, "findAllByFloor", null);
+], productsController.prototype, "findAllByFloor", null);
 __decorate([
-    (0, common_1.Get)('/findByBuildingSorted/:buildingId'),
-    __param(0, (0, common_1.Param)('buildingId')),
+    (0, common_1.Get)('/findBycollectionSorted/:collectionId'),
+    __param(0, (0, common_1.Param)('collectionId')),
     __param(1, (0, common_1.Query)('order')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", void 0)
-], RoomsController.prototype, "findAllByBuildingSortedByFloor", null);
+], productsController.prototype, "findAllBycollectionSortedByFloor", null);
 __decorate([
     (0, common_1.Get)('/count'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], RoomsController.prototype, "findNumberOfRooms", null);
+], productsController.prototype, "findNumberOfproducts", null);
 __decorate([
-    (0, common_1.Get)('/findByName/:buildingId/search'),
-    __param(0, (0, common_1.Param)('buildingId')),
+    (0, common_1.Get)('/findByName/:collectionId/search'),
+    __param(0, (0, common_1.Param)('collectionId')),
     __param(1, (0, common_1.Query)('name')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
-], RoomsController.prototype, "findOneByName", null);
+], productsController.prototype, "findOneByName", null);
 __decorate([
     (0, common_1.Get)(':roomId'),
-    __param(0, (0, common_1.Param)('buildingId')),
+    __param(0, (0, common_1.Param)('collectionId')),
     __param(1, (0, common_1.Param)('roomId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
-], RoomsController.prototype, "findOneById", null);
+], productsController.prototype, "findOneById", null);
 __decorate([
-    (0, common_1.Patch)(':buildingId/types/:roomId'),
-    __param(0, (0, common_1.Param)('buildingId')),
+    (0, common_1.Patch)(':collectionId/types/:roomId'),
+    __param(0, (0, common_1.Param)('collectionId')),
     __param(1, (0, common_1.Param)('roomId')),
     __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, update_room_dto_1.UpdateRoomDto]),
+    __metadata("design:paramtypes", [String, String, update_room_dto_1.updateproductsDto]),
     __metadata("design:returntype", void 0)
-], RoomsController.prototype, "update", null);
+], productsController.prototype, "update", null);
 __decorate([
-    (0, common_1.Delete)('/delete/:buildingId/types/:roomId'),
-    __param(0, (0, common_1.Param)('buildingId')),
+    (0, common_1.Delete)('/delete/:collectionId/types/:roomId'),
+    __param(0, (0, common_1.Param)('collectionId')),
     __param(1, (0, common_1.Param)('roomId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
-], RoomsController.prototype, "remove", null);
+], productsController.prototype, "remove", null);
 __decorate([
     (0, common_1.Get)('/ranking'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], RoomsController.prototype, "findRanking", null);
+], productsController.prototype, "findRanking", null);
 __decorate([
-    (0, common_1.Get)('/findAvailableRooms'),
+    (0, common_1.Get)('/findAvailableproducts'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], RoomsController.prototype, "findAvailableRooms", null);
-exports.RoomsController = RoomsController = __decorate([
-    (0, common_1.Controller)('rooms'),
-    __metadata("design:paramtypes", [rooms_service_1.RoomsService])
-], RoomsController);
-//# sourceMappingURL=rooms.controller.js.map
+], productsController.prototype, "findAvailableproducts", null);
+exports.productsController = productsController = __decorate([
+    (0, common_1.Controller)('products'),
+    __metadata("design:paramtypes", [products_service_1.productservice])
+], productsController);
+//# sourceMappingURL=products.controller.js.map

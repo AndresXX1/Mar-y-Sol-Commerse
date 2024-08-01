@@ -4,41 +4,41 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRoomsByBuilding, updateRoom } from '../../../Redux/reducer/rooms';
+import { fetchproductsByCollection, updateproducts } from '../../../Redux/reducer/products';
 import Selecteeed from './Select';
-import { setSelectedBuildingId } from '../../../Redux/reducer/rooms'; 
+import { setSelectedCollectionId } from '../../../Redux/reducer/collection'; 
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 
-const RoomsComponent = () => {
+const productsComponent = () => {
     const [editableRoomId, setEditableRoomId] = useState(null);
     const [editableRoomValues, setEditableRoomValues] = useState({});
     const [modifiedFields, setModifiedFields] = useState({});
     const dispatch = useDispatch();
-    const roomsFromRedux = useSelector((state) => state.rooms.rooms);
-    console.log("Rooms from Redux:", roomsFromRedux);
-    const selectedBuildingId = useSelector((state) => state.rooms.selectedBuildingId);
+    const productsFromRedux = useSelector((state) => state.products.products);
+    console.log("products from Redux:", productsFromRedux);
+    const selectedcollectionId = useSelector((state) => state.products.selectedcollectionId);
     const [openDescriptionDialog, setOpenDescriptionDialog] = useState({});
     const [openLocationDialog, setOpenLocationDialog] = useState({});
   
 
     useEffect(() => {
-        console.log("Selected Building ID:", selectedBuildingId);
-        if (selectedBuildingId) {
-            dispatch(fetchRoomsByBuilding(selectedBuildingId));
+        console.log("Selected collection ID:", selectedcollectionId);
+        if (selectedcollectionId) {
+            dispatch(fetchproductsByCollection(selectedcollectionId));
         }
-    }, [selectedBuildingId, dispatch]);
+    }, [selectedcollectionId, dispatch]);
 
     useEffect(() => {
-        console.log("Rooms from Redux:", roomsFromRedux);
-    }, [roomsFromRedux]);
+        console.log("products from Redux:", productsFromRedux);
+    }, [productsFromRedux]);
 
     
   const handleEdit = (roomId) => {
     setEditableRoomId(roomId);
-    const room = roomsFromRedux.find(room => room._id === roomId); 
+    const room = productsFromRedux.find(room => room._id === roomId); 
     console.log("Editing Room:", room);
     setEditableRoomValues(room);
     setModifiedFields({});
@@ -58,18 +58,18 @@ const RoomsComponent = () => {
 
   const handleSave = async () => {
     try {
-      if (!selectedBuildingId) {
-        console.error('Error: selectedBuildingId is undefined');
+      if (!selectedcollectionId) {
+        console.error('Error: selectedcollectionId is undefined');
 
         return;
 
       }
   
       await dispatch(
-        updateRoom({
-          buildingId: selectedBuildingId,
+        updateproducts({
+          collectionId: selectedcollectionId,
           roomId: editableRoomId,
-          updateRoomData: modifiedFields,
+          updateproductsData: modifiedFields,
         })
       );
       setEditableRoomId(null);
@@ -107,10 +107,10 @@ const RoomsComponent = () => {
       <div style={{marginBottom:"30px",marginTop:"30px"}}>
 
       <Selecteeed  
-  onSelectBuilding={(buildingId) => {
-    dispatch(setSelectedBuildingId(buildingId)); 
-    dispatch(fetchRoomsByBuilding(buildingId));
-    console.log("ACAAAAAAAAA:", roomsFromRedux); 
+  onSelectcollection={(collectionId) => {
+    dispatch(setSelectedCollectionId(collectionId)); 
+    dispatch(fetchproductsByCollection(collectionId));
+    console.log("ACAAAAAAAAA:", productsFromRedux); 
   }} 
 /> 
       </div>
@@ -130,7 +130,7 @@ const RoomsComponent = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-          {Array.isArray(roomsFromRedux) && roomsFromRedux.map(room => (
+          {Array.isArray(productsFromRedux) && productsFromRedux.map(room => (
               <TableRow key={room._id}>
                 <TableCell>
                   {editableRoomId === room._id ? (
@@ -285,4 +285,4 @@ const RoomsComponent = () => {
   );
 };
 
-export default RoomsComponent;
+export default productsComponent;

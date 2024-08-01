@@ -1,35 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRoomsByBuilding, updateRoom,setSelectedBuildingId } from '../../Redux/reducer/rooms';
+import { fetchproductsByCollection, updateproducts,setSelectedcollectionId } from '../../Redux/reducer/products';
 import Selecteeed from '../../pages/Admin/tablaOficinas/Select';
 import Cards from '../../Components/Cliente/Cards/cards'; // Asegúrate de que este es el componente correcto
 import { Grid } from '@mui/material';
 import Filter from "../../Components/Cliente/Filter/filter"
 
-const RoomsComponent = () => {
+const productsComponent = () => {
   const [editableRoomId, setEditableRoomId] = useState(null);
   const [editableRoomValues, setEditableRoomValues] = useState({});
   const [modifiedFields, setModifiedFields] = useState({});
   const dispatch = useDispatch();
-  const roomsFromRedux = useSelector((state) => state.rooms.rooms);
-  const selectedBuildingId = useSelector((state) => state.rooms.selectedBuildingId);
+  const productsFromRedux = useSelector((state) => state.products.products);
+  const selectedcollectionId = useSelector((state) => state.products.selectedcollectionId);
   const [openDescriptionDialog, setOpenDescriptionDialog] = useState({});
   const [openLocationDialog, setOpenLocationDialog] = useState({});
 
   useEffect(() => {
-    console.log("Selected Building ID:", selectedBuildingId);
-    if (selectedBuildingId) {
-      dispatch(fetchRoomsByBuilding(selectedBuildingId));
+    console.log("Selected collection ID:", selectedcollectionId);
+    if (selectedcollectionId) {
+      dispatch(fetchproductsByCollection(selectedcollectionId));
     }
-  }, [selectedBuildingId, dispatch]);
+  }, [selectedcollectionId, dispatch]);
 
   useEffect(() => {
-    console.log("Rooms from Redux:", roomsFromRedux);
-  }, [roomsFromRedux]);
+    console.log("products from Redux:", productsFromRedux);
+  }, [productsFromRedux]);
 
   const handleEdit = (roomId) => {
     setEditableRoomId(roomId);
-    const room = roomsFromRedux.find(room => room._id === roomId);
+    const room = productsFromRedux.find(room => room._id === roomId);
     console.log("Editing Room:", room);
     setEditableRoomValues(room);
     setModifiedFields({});
@@ -48,18 +48,18 @@ const RoomsComponent = () => {
 
   const handleSave = async () => {
     try {
-      if (!selectedBuildingId) {
-        console.error('Error: selectedBuildingId is undefined');
+      if (!selectedcollectionId) {
+        console.error('Error: selectedcollectionId is undefined');
 
         return;
 
       }
 
       await dispatch(
-        updateRoom({
-          buildingId: selectedBuildingId,
+        updateproducts({
+          collectionId: selectedcollectionId,
           roomId: editableRoomId,
-          updateRoomData: modifiedFields,
+          updateproductsData: modifiedFields,
         })
       );
       setEditableRoomId(null);
@@ -96,9 +96,9 @@ const RoomsComponent = () => {
       <Grid item xs={12}>
         <div style={{ marginBottom: "30px", marginTop: "30px" }}>
           <Selecteeed
-            onSelectBuilding={(buildingId) => {
-              dispatch(setSelectedBuildingId(buildingId));
-              dispatch(fetchRoomsByBuilding(buildingId));
+            onSelectcollection={(collectionId) => {
+              dispatch(setSelectedcollectionId(collectionId));
+              dispatch(fetchproductsByCollection(collectionId));
             }}
           />
         </div>
@@ -107,10 +107,10 @@ const RoomsComponent = () => {
         </Grid>
       </Grid>
       <Grid item xs={20}>
-        <Cards data={roomsFromRedux} />
+        <Cards data={productsFromRedux} />
       </Grid>
     </Grid>
   );
 };
 
-export default RoomsComponent;
+export default productsComponent;

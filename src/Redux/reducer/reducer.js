@@ -13,7 +13,7 @@ export const updateUser = createAsyncThunk('users/updateUser', async (userData) 
 });
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-  const response = await axios.get('/api/user/all');
+  const response = await axios.get('/user/all');
 
   return response.data;
 
@@ -26,16 +26,16 @@ export const fetchBookings = createAsyncThunk('bookings/fetchBookings', async ()
 
 });
 
-export const fetchBuildings = createAsyncThunk('buildings/fetchBuildings', async () => {
+export const fetchCollection = createAsyncThunk('collection/fetchCollection', async () => {
   const response = await axios.get('/collection');
 
   return response.data;
 
 });
 
-export const updateBuilding = createAsyncThunk('collection/updateCollection', async ({ id, updatedBuilding }) => {
+export const updatecollection = createAsyncThunk('collection/updateCollection', async ({ id, updatedcollection }) => {
     try {
-      const response = await axios.patch(`/collection/${id}`, updatedBuilding);
+      const response = await axios.patch(`/collection/${id}`, updatedcollection);
 
       return response.data;
 
@@ -50,7 +50,7 @@ export const updateBuilding = createAsyncThunk('collection/updateCollection', as
   
 
 const initialState = {
-  rooms: [], 
+  products: [], 
   loading: false,
   error: null,
   entities: []
@@ -101,14 +101,14 @@ const userSlice = createSlice({
         state.loading = 'idle';
         state.error = action.error;
       })
-      .addCase(fetchBuildings.pending, (state) => {
+      .addCase(fetchCollection.pending, (state) => {
         state.loading = 'loading';
       })
-      .addCase(fetchBuildings.fulfilled, (state, action) => {
+      .addCase(fetchCollection.fulfilled, (state, action) => {
         state.loading = 'idle';
         state.entities = action.payload;
       })
-      .addCase(fetchBuildings.rejected, (state, action) => {
+      .addCase(fetchCollection.rejected, (state, action) => {
         state.loading = 'idle';
         state.error = action.error;
       })

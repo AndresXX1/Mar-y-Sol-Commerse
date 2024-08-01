@@ -48,25 +48,25 @@
 /// <reference types="mongoose-sequence" />
 /// <reference types="mongoose/types/inferschematype" />
 /// <reference types="mongoose-sequence/node_modules/mongoose/types/inferschematype" />
-import { CreateRoomDto } from './dto/create-room.dto';
-import { UpdateRoomDto } from './dto/update-room.dto';
+import { createproductsDto } from './dto/create-room.dto';
+import { updateproductsDto } from './dto/update-room.dto';
 import { Model } from 'mongoose';
-import { Room } from './schema/rooms.schema';
-import { Building } from 'src/buildings/schema/building.schema';
+import { Room } from './schema/products.schema';
+import { collection } from 'src/collections/schema/collection.schema';
 import { Booking } from 'src/bookings/schema/booking.schema';
-export declare class RoomsService {
+export declare class productservice {
     private readonly roomModel;
-    private readonly buildingModel;
+    private readonly collectionModel;
     private readonly bookingModel;
-    constructor(roomModel: Model<Room>, buildingModel: Model<Building>, bookingModel: Model<Booking>);
-    createRoom(buildingId: string, createRoomDto: CreateRoomDto): Promise<Room>;
+    constructor(roomModel: Model<Room>, collectionModel: Model<collection>, bookingModel: Model<Booking>);
+    createproducts(collectionId: string, createproductsDto: createproductsDto): Promise<Room>;
     findOneById(roomId: string): Promise<Room>;
-    findAllByBuilding(buildingId: string): Promise<Room[]>;
-    findAllByBuildingSortedByFloor(buildingId: string, order: string): Promise<Room[]>;
-    findNumberOfRooms(): Promise<number>;
-    findOneByName(buildingId: string, name: string): Promise<string[]>;
-    update(buildingId: string, roomId: string, updateRoomDto: UpdateRoomDto): Promise<Room>;
-    remove(buildingId: string, roomId: string): Promise<string>;
+    findAllBycollection(collectionId: string): Promise<Room[]>;
+    findAllBycollectionSortedByFloor(collectionId: string, order: string): Promise<Room[]>;
+    findNumberOfproducts(): Promise<number>;
+    findOneByName(collectionId: string, name: string): Promise<string[]>;
+    update(collectionId: string, roomId: string, updateproductsDto: updateproductsDto): Promise<Room>;
+    remove(collectionId: string, roomId: string): Promise<string>;
     filterByDaysAndHours(): Promise<void>;
-    rankingRoomsByBookings(): Promise<Room[]>;
+    rankingproductsByBookings(): Promise<Room[]>;
 }

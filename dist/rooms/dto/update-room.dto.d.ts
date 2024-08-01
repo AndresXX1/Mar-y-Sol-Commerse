@@ -1,5 +1,5 @@
-import { CreateRoomDto } from './create-room.dto';
-declare const UpdateRoomDto_base: import("@nestjs/mapped-types").MappedType<Partial<CreateRoomDto>>;
-export declare class UpdateRoomDto extends UpdateRoomDto_base {
+import { createproductsDto } from './create-room.dto';
+declare const updateproductsDto_base: import("@nestjs/mapped-types").MappedType<Partial<createproductsDto>>;
+export declare class updateproductsDto extends updateproductsDto_base {
 }
 export {};

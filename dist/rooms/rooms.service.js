@@ -12,27 +12,27 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RoomsService = void 0;
+exports.productservice = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const rooms_schema_1 = require("./schema/rooms.schema");
-const building_schema_1 = require("../buildings/schema/building.schema");
+const products_schema_1 = require("./schema/products.schema");
+const collection_schema_1 = require("../collections/schema/collection.schema");
 const booking_schema_1 = require("../bookings/schema/booking.schema");
-let RoomsService = class RoomsService {
-    constructor(roomModel, buildingModel, bookingModel) {
+let productservice = class productservice {
+    constructor(roomModel, collectionModel, bookingModel) {
         this.roomModel = roomModel;
-        this.buildingModel = buildingModel;
+        this.collectionModel = collectionModel;
         this.bookingModel = bookingModel;
     }
-    async createRoom(buildingId, createRoomDto) {
-        const building = await this.buildingModel.findById(buildingId);
-        if (!building) {
+    async createproducts(collectionId, createproductsDto) {
+        const collection = await this.collectionModel.findById(collectionId);
+        if (!collection) {
             throw new Error('El edificio especificado no existe.');
         }
-        const createdRoom = await this.roomModel.create(createRoomDto);
-        building.rooms.push(createdRoom.id);
-        await building.save();
+        const createdRoom = await this.roomModel.create(createproductsDto);
+        collection.products.push(createdRoom.id);
+        await collection.save();
         return createdRoom;
     }
     async findOneById(roomId) {
@@ -42,64 +42,64 @@ let RoomsService = class RoomsService {
         }
         return room;
     }
-    async findAllByBuilding(buildingId) {
-        const building = await this.buildingModel.findById(buildingId);
-        if (!building) {
+    async findAllBycollection(collectionId) {
+        const collection = await this.collectionModel.findById(collectionId);
+        if (!collection) {
             throw new Error('El piso especificado no existe.');
         }
-        const rooms = await this.roomModel.find({ _id: { $in: building.rooms } });
-        return rooms;
+        const products = await this.roomModel.find({ _id: { $in: collection.products } });
+        return products;
     }
-    async findAllByBuildingSortedByFloor(buildingId, order) {
-        const building = await this.buildingModel.findById(buildingId);
-        if (!building) {
+    async findAllBycollectionSortedByFloor(collectionId, order) {
+        const collection = await this.collectionModel.findById(collectionId);
+        if (!collection) {
             throw new Error('El piso especificado no existe.');
         }
         if (order !== 'asc' && order !== 'desc') {
             throw new Error('El parámetro "order" debe ser "asc" o "desc"');
         }
         const sortOrder = order === 'asc' ? 1 : -1;
-        const rooms = await this.roomModel
-            .find({ _id: { $in: building.rooms } })
+        const products = await this.roomModel
+            .find({ _id: { $in: collection.products } })
             .sort({ floorNumber: sortOrder });
-        return rooms;
+        return products;
     }
-    async findNumberOfRooms() {
+    async findNumberOfproducts() {
         let count = 0;
-        const allBuildings = await this.buildingModel
+        const allcollections = await this.collectionModel
             .find()
-            .populate('rooms')
+            .populate('products')
             .lean()
             .exec();
-        console.log(allBuildings);
-        for (let i = 0; i < allBuildings.length; i++) {
-            count += allBuildings[i].rooms.length;
+        console.log(allcollections);
+        for (let i = 0; i < allcollections.length; i++) {
+            count += allcollections[i].products.length;
         }
         return count;
     }
-    async findOneByName(buildingId, name) {
-        const building = await this.buildingModel
-            .findById(buildingId)
-            .populate('rooms')
+    async findOneByName(collectionId, name) {
+        const collection = await this.collectionModel
+            .findById(collectionId)
+            .populate('products')
             .lean()
             .exec();
-        if (!building) {
+        if (!collection) {
             throw new Error('El edificio especificado no existe.');
         }
-        const roomsWithName = building.rooms.filter((room) => room.name.toLowerCase().trim().includes(name.toLowerCase().trim()));
-        return roomsWithName;
+        const productsWithName = collection.products.filter((room) => room.name.toLowerCase().trim().includes(name.toLowerCase().trim()));
+        return productsWithName;
     }
-    async update(buildingId, roomId, updateRoomDto) {
-        const building = await this.buildingModel.findById(buildingId);
-        if (!building) {
+    async update(collectionId, roomId, updateproductsDto) {
+        const collection = await this.collectionModel.findById(collectionId);
+        if (!collection) {
             throw new Error('El edificio especificado no existe.');
         }
-        const updatedRoom = await this.roomModel.findByIdAndUpdate(roomId, updateRoomDto, { new: true });
+        const updatedRoom = await this.roomModel.findByIdAndUpdate(roomId, updateproductsDto, { new: true });
         return updatedRoom;
     }
-    async remove(buildingId, roomId) {
-        const building = await this.buildingModel.findById(buildingId);
-        if (!building) {
+    async remove(collectionId, roomId) {
+        const collection = await this.collectionModel.findById(collectionId);
+        if (!collection) {
             throw new Error('El edificio especificado no existe.');
         }
         await this.roomModel.findByIdAndDelete(roomId);
@@ -107,8 +107,8 @@ let RoomsService = class RoomsService {
     }
     async filterByDaysAndHours() {
     }
-    async rankingRoomsByBookings() {
-        const rooms = await this.roomModel.aggregate([
+    async rankingproductsByBookings() {
+        const products = await this.roomModel.aggregate([
             {
                 $lookup: {
                     from: 'bookings',
@@ -131,17 +131,17 @@ let RoomsService = class RoomsService {
                 $limit: 6,
             },
         ]);
-        return rooms;
+        return products;
     }
 };
-exports.RoomsService = RoomsService;
-exports.RoomsService = RoomsService = __decorate([
+exports.productservice = productservice;
+exports.productservice = productservice = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)(rooms_schema_1.Room.name)),
-    __param(1, (0, mongoose_1.InjectModel)(building_schema_1.Building.name)),
+    __param(0, (0, mongoose_1.InjectModel)(products_schema_1.Room.name)),
+    __param(1, (0, mongoose_1.InjectModel)(collection_schema_1.collection.name)),
     __param(2, (0, mongoose_1.InjectModel)(booking_schema_1.Booking.name)),
     __metadata("design:paramtypes", [mongoose_2.Model,
         mongoose_2.Model,
         mongoose_2.Model])
-], RoomsService);
-//# sourceMappingURL=rooms.service.js.map
+], productservice);
+//# sourceMappingURL=products.service.js.map

@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [tab, setTab] = useState("");
   const [admTab, setAdmTab] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [editedProduct, setEditedProduct] = useState(null);
+  const [editedproducts, setEditedproducts] = useState(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -32,8 +32,8 @@ export const AuthProvider = ({ children }) => {
         setAdmTab,
         isOpen,
         setIsOpen,
-        editedProduct,
-        setEditedProduct,
+        editedproducts,
+        setEditedproducts,
       }}
     >
       {children}

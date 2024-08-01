@@ -17,9 +17,9 @@ import {
 } from '@mui/material';
 import { Widget } from 'cloudinary-react';
 import CloseIcon from '@mui/icons-material/Close';
-import BuildingSelect2 from './selectbuilding';
-import { fetchBuildingById } from '../../../Redux/reducer/building';
-import { createRoom } from '../../../Redux/reducer/rooms';
+import BuildingSelect2 from './selectcollection';
+import { fetchCollectionById } from '../../../Redux/reducer/collection';
+import { createproducts } from '../../../Redux/reducer/products';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { toast, ToastContainer } from 'react-toastify';
@@ -49,10 +49,12 @@ const TabSecurity = () => {
     {
       office: 'Oficina 1',
       name: '',
-      location: '',
-      equipment: [],
-      floor: 0,
+      offer: '',
       description: '',
+      size: [],
+      color: [], // Asegúrate de que este valor sea un array
+      booking: [],
+      state: '',
     },
   ]);
 
@@ -60,7 +62,7 @@ const TabSecurity = () => {
   const [cloudinaryImages, setCloudinaryImages] = useState([]);
   const [plans, setPlans] = useState(''); // Estado para la imagen del plano de piso
   const [showMessage, setShowMessage] = useState(false);
-  const [selectedBuildingId, setSelectedBuildingId] = useState('');
+  const [selectedcollectionId, setSelectedcollectionId] = useState('');
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
   const router = useRouter();
@@ -96,8 +98,8 @@ const TabSecurity = () => {
   }, []);
 
   const handleBuildingSelect = (id) => {
-    setSelectedBuildingId(id); // Actualiza el ID del edificio seleccionado
-    dispatch(fetchBuildingById(id));
+    setSelectedcollectionId(id); // Actualiza el ID del edificio seleccionado
+    dispatch(fetchCollectionById(id));
     console.log('Selected Building ID:', id);
   };
 
@@ -139,26 +141,25 @@ const TabSecurity = () => {
   const handleSubmit = () => {
     const officeData = offices[0]; 
 
-    const roomData = {
+    const productData = {
       
       name: officeData.name,
       booking: [],
-      location: officeData.location,
-      equipment: officeData.equipment,
-      type: officeData.type,
-      floorNumber: officeData.floor,
       description: officeData.description,
+      size: officeData.size,
+      color: officeData.color,
+      type: officeData.type,
       images: images,
       plans: plans,
       state: officeData.state
     };
     console.log('Datos a enviar:', {
-      buildingId: selectedBuildingId,
-      roomData,
+      collectionId: selectedcollectionId,
+      productData,
     });
 
-    if (selectedBuildingId) {
-      dispatch(createRoom({ buildingId: selectedBuildingId, roomData }))
+    if (selectedcollectionId) {
+      dispatch(createproducts({ collectionId: selectedcollectionId, productData }))
         .unwrap()
         .then((response) => {
           toast.success('¡Oficina creada exitosamente!', {
@@ -193,7 +194,7 @@ const TabSecurity = () => {
   return (
     <React.Fragment>
       <Typography style={{ marginTop: '50px', marginLeft: '20px', textAlign: 'left' }} variant="h6" gutterBottom>
-        CREA UNA NUEVA OFICINA
+        CREA UN NUEVO PRODUCTO
       </Typography>
       <CardContent sx={{ paddingBottom: 0 }}>
       <ToastContainer />
@@ -209,12 +210,15 @@ const TabSecurity = () => {
         </Grid>
         <Box sx={{ marginTop: '20px' }}>
           <Typography style={{ marginTop: '20px', marginBottom: '10px' }} variant="h6" gutterBottom>
-            Seleccione un Edificio
+            Seleccione la coleccion donde creara el producto
           </Typography>
           <Box sx={{ marginBottom: '10px' }}>
             <BuildingSelect2 onSelectBuilding={handleBuildingSelect} />
           </Box>
         </Box>
+        <Typography style={{ marginTop: '30px', marginBottom: '-12px' }} variant="h6" gutterBottom>
+            Datos del producto nuevo
+          </Typography>
       </CardContent>
       <form>
         <Paper elevation={3} style={{ padding: '20px', marginBottom: '20px' }}>
@@ -230,32 +234,12 @@ const TabSecurity = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    fullWidth
-                    type="number"
-                    label="Piso"
-                    value={office.floor}
-                    onChange={(e) => handleOfficeChange(e, index, 'floor')}
-                    InputProps={{
-                      inputProps: { min: 0 },
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Descripción"
-                    value={office.description}
-                    onChange={(e) => handleOfficeChange(e, index, 'description')}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
                   <FormControl fullWidth>
-                    <InputLabel id={`equipment-label-${index}`}>Equipamiento</InputLabel>
+                    <InputLabel id={`size-label-${index}`}>Talles disponibles</InputLabel>
                     <Select
-                      labelId={`equipment-label-${index}`}
+                      labelId={`size-label-${index}`}
                       multiple
-                      value={office.equipment}
+                      value={office.size}
                       MenuProps={{
                         PaperProps: {
                           style: {
@@ -269,42 +253,74 @@ const TabSecurity = () => {
                         const selectedValues = event.target.value;
                         if (selectedValues.length <= 6) {
                           const newOffices = [...offices];
-                          newOffices[index].equipment = selectedValues;
+                          newOffices[index].size = selectedValues;
                           setOffices(newOffices);
                         } else {
                           setShowMessage(true);
                         }
                       }}
                     >
-                      <MenuItem value="Escritorio">Escritorio</MenuItem>
-                      <MenuItem value="Silla de oficina">Silla de oficina</MenuItem>
-                      <MenuItem value="Sillas">Sillas</MenuItem>
-                      <MenuItem value="Computadora">Computadora</MenuItem>
-                      <MenuItem value="Mesa de conferencia">Mesa de conferencia</MenuItem>
-                      <MenuItem value="Mesas">Mesas</MenuItem>
-                      <MenuItem value="Mesas de trabajo">Mesas de trabajo</MenuItem>
-                      <MenuItem value="Mesas redondas">Mesas redondas</MenuItem>
-                      <MenuItem value="Cocina industrial">Cocina industrial</MenuItem>
-                      <MenuItem value="Materiales de arte">Materiales de arte</MenuItem>
-                      <MenuItem value="Tumbonas">Tumbonas</MenuItem>
-                      <MenuItem value="Sombrillas">Sombrillas</MenuItem>
-                      <MenuItem value="Duchas">Duchas</MenuItem>
-                      <MenuItem value="Instalaciones deportivas">Instalaciones deportivas</MenuItem>
-                      <MenuItem value="Instalaciones recreativas">Instalaciones recreativas</MenuItem>
-                      <MenuItem value="Salón de Eventos">Salón de Eventos</MenuItem>
-                      <MenuItem value="Estantes">Estantes</MenuItem>
-                      <MenuItem value="Pantalla">Pantalla</MenuItem>
-                      <MenuItem value="Pizarra">Pizarra</MenuItem>
-                      <MenuItem value="Proyector">Proyector</MenuItem>
-                      <MenuItem value="Micrófonos">Micrófonos</MenuItem>
-                      <MenuItem value="Mesa de billar">Mesa de billar</MenuItem>
-                      <MenuItem value="Consolas de videojuegos">Consolas de videojuegos</MenuItem>
-                      <MenuItem value="Salón de exposiciones">Salón de exposiciones</MenuItem>
-                      <MenuItem value="Stands">Stands</MenuItem>
-                      <MenuItem value="Carretillas">Carretillas</MenuItem>
-                      <MenuItem value="Iluminación ajustable">Iluminación ajustable</MenuItem>
-                      <MenuItem value="Cajas de almacenamiento">Cajas de almacenamiento</MenuItem>
-                      <MenuItem value="Sillas decorativas">Sillas decorativas</MenuItem>
+                      <MenuItem value="rojo">SS</MenuItem>
+                      <MenuItem value="Negro">S</MenuItem>
+                      <MenuItem value="Azul">L</MenuItem>
+                      <MenuItem value="Verde">X</MenuItem>
+                      <MenuItem value="Amarillo">XL</MenuItem>
+                      <MenuItem value="Violeta">XXL</MenuItem>
+
+                    </Select>
+                    {showMessage && (
+                      <Typography variant="body2" color="error">
+                        Solo puede elegir 6 colores disponibles.
+                      </Typography>
+                    )}
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Descripción"
+                    value={office.description}
+                    multiline
+                    rows={4}
+                    onChange={(e) => handleOfficeChange(e, index, 'description')}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControl fullWidth>
+                    <InputLabel id={`color-label-${index}`}>Colores disponibles</InputLabel>
+                    <Select
+                      labelId={`color-label-${index}`}
+                      multiple
+                      value={office.color}
+                      MenuProps={{
+                        PaperProps: {
+                          style: {
+                            maxHeight: 300,
+                            marginTop: 8,
+                            position: 'fixed',
+                          },
+                        },
+                      }}
+                      onChange={(event) => {
+                        const selectedValues = event.target.value;
+                        if (selectedValues.length <= 6) {
+                          const newOffices = [...offices];
+                          newOffices[index].color = selectedValues;
+                          setOffices(newOffices);
+                        } else {
+                          setShowMessage(true);
+                        }
+                      }}
+                    >
+                      <MenuItem value="rojo">Rojo</MenuItem>
+                      <MenuItem value="Negro">Negro</MenuItem>
+                      <MenuItem value="Azul">Azul</MenuItem>
+                      <MenuItem value="Verde">Verde</MenuItem>
+                      <MenuItem value="Amarillo">Amarillo</MenuItem>
+                      <MenuItem value="Violeta">Violeta</MenuItem>
+                      <MenuItem value="Naranja">Naranja</MenuItem>
+                      <MenuItem value="Ocre">Ocre</MenuItem>
+                      <MenuItem value="Dorado">Dorado</MenuItem>
                     </Select>
                     {showMessage && (
                       <Typography variant="body2" color="error">
@@ -316,8 +332,8 @@ const TabSecurity = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
-                    label="Ubicación en el piso"
-                    value={office.location}
+                    label="Descripcion de oferta"
+                    value={office.offer}
                     onChange={(e) => handleOfficeChange(e, index, 'location')}
                   />
                 </Grid>
@@ -335,6 +351,9 @@ const TabSecurity = () => {
           ))}
         </Paper>
       </form>
+      <Typography style={{ marginTop: '30px', marginBottom: '50px', textAlign: "center" }} variant="h6" gutterBottom>
+            SELECCIONA IMAGENES PARA TU NUEVO PRODUCTO
+          </Typography>
       <Box style={{ marginLeft: '0px', marginBottom: '20px', marginTop: '20px' }}>
         <Box sx={{ mt: 2 }}>
           <Grid container spacing={7}>

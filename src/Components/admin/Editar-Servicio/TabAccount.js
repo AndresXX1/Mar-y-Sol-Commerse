@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { createBuilding } from "../../../Redux/reducer/building"
+import { createCollection } from "../../../Redux/reducer/collection"
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -29,7 +29,7 @@ const ButtonStyled = styled(Button)(({ theme }) => ({
   }
 }));
 
-const CreateBuilding = () => {
+const Createcollection = () => {
   const [imgSrc, setImgSrc] = useState('/images/logos/iconocam.png');
   const dispatch = useDispatch();
   const currentUserEmail = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('decodedToken')) : null;
@@ -63,12 +63,10 @@ const CreateBuilding = () => {
     }
   
    
-    const buildingData = {
+    const collectionData = {
       name: formValues.name,
-      address: formValues.address,
+      seasson: formValues.seasson,
       description: formValues.description,
-      city: formValues.city,
-      country: formValues.country,
       owner: currentUserEmail.email, 
       blueprints: '' 
     };
@@ -93,20 +91,20 @@ const CreateBuilding = () => {
       const imageUrl = data.secure_url;
   
      
-      buildingData.blueprints = imageUrl;
+      collectionData.blueprints = imageUrl;
   
      
       setImgSrc('/images/logos/iconocam.png');
   
       
-      console.log('Datos del edificio a enviar:', buildingData);
-      await dispatch(createBuilding(buildingData));
+      console.log('Datos de la coleccion a enviar:', collectionData);
+      await dispatch(createCollection(collectionData));
   
      
       e.target.reset();
   
       
-      toast.success('¡Edificio creado exitosamente!', {
+      toast.success('¡Coleccion creada exitosamente!', {
         position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
@@ -117,8 +115,8 @@ const CreateBuilding = () => {
       });
     } catch (error) {
      
-      console.error('Error al crear el edificio:', error.message);
-      toast.error('Error al crear el edificio.');
+      console.error('Error al crear Coleccion:', error.message);
+      toast.error('Error al crear Coleccion.');
     }
   }
   
@@ -136,7 +134,7 @@ const CreateBuilding = () => {
       <ToastContainer />
       <form onSubmit={handleSubmit}>
         <Typography style={{ marginTop: '20px', marginBottom: '20px' }} variant="h6" gutterBottom>
-          Crea un nuevo edificio
+          Crea una nueva Coleccion
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -144,7 +142,7 @@ const CreateBuilding = () => {
               <ImgStyled src={imgSrc} alt='Profile Pic' sx={{width:"300px"}} />
               <Box sx={{ marginLeft: '30px' }}>
                 <ButtonStyled component='label' variant='contained' htmlFor='upload-image'>
-                  Carga una imagen del edificio
+                  Carga una imagen de la coleccion
                   <input
                     hidden
                     type='file'
@@ -160,40 +158,25 @@ const CreateBuilding = () => {
             </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Nombre' placeholder='Nombre del edificio' name='name' />
+            <TextField fullWidth label='Nombre' placeholder='Nombre de la coleccion' name='name' />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Dirección' placeholder='Dirección del edificio' name='address' />
+            <TextField fullWidth label='Temporada' placeholder='Temporada del año' name='seasson' />
           </Grid>
+          <Grid item xs={12} sm={12}>
+      <TextField
+        fullWidth
+        label='Descripción'
+        placeholder='Descripción de la colección'
+        name='description'
+        multiline
+        rows={4} // Puedes ajustar el número de filas según tus necesidades
+      />
+    </Grid>
+
+        
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Descripción' placeholder='Descripción del edificio' name='description' />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Ciudad' placeholder='Ciudad' name='city' />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label='Pisos Totales'
-              placeholder='Ej:7'
-              name='totalFloors'
-              
-              
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel>País</InputLabel>
-              <Select label='País' defaultValue='' name='country'>
-                <MenuItem value='Argentina'>Argentina</MenuItem>
-                <MenuItem value='Colombia'>Colombia</MenuItem>
-                <MenuItem value='Ecuador'>Ecuador</MenuItem>
-                <MenuItem value='Chile'>Chile</MenuItem>
-                <MenuItem value='Venezuela'>Venezuela</MenuItem>
-                <MenuItem value='Uruguay'>Uruguay</MenuItem>
-                <MenuItem value='Perú'>Perú</MenuItem>
-              </Select>
-            </FormControl>
+           
           </Grid>
           <Grid item xs={12}>
             <Button type='submit' variant='contained'>
@@ -207,4 +190,4 @@ const CreateBuilding = () => {
 };
 
 
-export default CreateBuilding;
+export default Createcollection;

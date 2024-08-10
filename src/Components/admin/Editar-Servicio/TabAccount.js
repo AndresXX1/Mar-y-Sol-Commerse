@@ -67,8 +67,8 @@ const Createcollection = () => {
       name: formValues.name,
       seasson: formValues.seasson,
       description: formValues.description,
-      owner: currentUserEmail.email, 
-      blueprints: '' 
+      blueprints: '',
+      state: formValues.state 
     };
   
    
@@ -173,7 +173,15 @@ const Createcollection = () => {
         rows={4} // Puedes ajustar el número de filas según tus necesidades
       />
     </Grid>
-
+    <Grid item xs={12} >
+            <FormControl fullWidth>
+              <InputLabel>Estado</InputLabel>
+              <Select label='State' defaultValue='' name='state' onChange={(e) => onChange(e, index, 'state')}>
+                      <MenuItem value='Activo'>Activo</MenuItem>
+                      <MenuItem value='Inactivo'>Inactivo</MenuItem>
+                    </Select>
+            </FormControl>
+          </Grid>
         
           <Grid item xs={12} sm={6}>
            

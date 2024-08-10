@@ -49,7 +49,7 @@ const Selecteeed = ({ onSelectcollection }) => {
           <h2 >Coleccion:  {selectedcollectionName}</h2>
          </div>
       <FormControl fullWidth>
-          <InputLabel >Edificio</InputLabel>
+          <InputLabel >Coleccion</InputLabel>
           <Select
               labelId="collection-select-label"
               id="collection-select"

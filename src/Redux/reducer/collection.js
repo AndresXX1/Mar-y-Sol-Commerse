@@ -68,10 +68,15 @@ const collectionsSlice = createSlice({
   initialState: {
     collections: [],
     collection: null,
+    selectedCollectionId: null,
     loading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    setSelectedCollectionId(state, action) {
+      state.selectedCollectionId = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(createCollection.fulfilled, (state, action) => {
       state.collections.push(action.payload);
@@ -113,9 +118,11 @@ const collectionsSlice = createSlice({
       state.error = action.payload;
     });
     builder.addCase(updateCollectionById.fulfilled, (state, action) => {
-      state.collections = state.collections.map(collection =>
-        collection.id === action.payload.id ? action.payload : collection
-      );
+      const updatedCollection = action.payload;
+      const index = state.collections.findIndex(collection => collection._id === updatedCollection._id);
+      if (index !== -1) {
+        state.collections[index] = updatedCollection;
+      }
       state.loading = false;
       state.error = null;
     });
@@ -128,7 +135,7 @@ const collectionsSlice = createSlice({
       state.error = action.payload;
     });
     builder.addCase(deleteCollectionById.fulfilled, (state, action) => {
-      state.collections = state.collections.filter(collection => collection.id !== action.payload);
+      state.collections = state.collections.filter(collection => collection._id !== action.payload);
       state.loading = false;
       state.error = null;
     });
@@ -143,4 +150,5 @@ const collectionsSlice = createSlice({
   },
 });
 
+export const { setSelectedCollectionId } = collectionsSlice.actions;
 export default collectionsSlice.reducer;

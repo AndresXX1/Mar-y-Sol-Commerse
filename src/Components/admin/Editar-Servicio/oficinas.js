@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { Widget } from 'cloudinary-react';
 import CloseIcon from '@mui/icons-material/Close';
-import BuildingSelect2 from './selectcollection';
+import CollectionSelect2 from './selectcollection';
 import { fetchCollectionById } from '../../../Redux/reducer/collection';
 import { createproducts } from '../../../Redux/reducer/products';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,10 +26,10 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ImgStyled = styled('img')(({ theme }) => ({
-  width: 200,
-  height: 200,
-  marginRight: theme.spacing(6.25),
-  borderRadius: theme.shape.borderRadius,
+  maxWidth: '70%',
+  height: 'auto',
+  display: 'block',
+  margin: '0 auto',
 }));
 
 const ButtonStyled = styled(Button)(({ theme }) => ({
@@ -52,7 +52,7 @@ const TabSecurity = () => {
       offer: '',
       description: '',
       size: [],
-      color: [], // Asegúrate de que este valor sea un array
+      color: [],
       booking: [],
       state: '',
     },
@@ -60,7 +60,7 @@ const TabSecurity = () => {
 
   const [images, setImages] = useState([]);
   const [cloudinaryImages, setCloudinaryImages] = useState([]);
-  const [plans, setPlans] = useState(''); // Estado para la imagen del plano de piso
+  const [plans, setPlans] = useState('');
   const [showMessage, setShowMessage] = useState(false);
   const [selectedcollectionId, setSelectedcollectionId] = useState('');
   const cloudinaryRef = useRef();
@@ -98,7 +98,7 @@ const TabSecurity = () => {
   }, []);
 
   const handleBuildingSelect = (id) => {
-    setSelectedcollectionId(id); // Actualiza el ID del edificio seleccionado
+    setSelectedcollectionId(id);
     dispatch(fetchCollectionById(id));
     console.log('Selected Building ID:', id);
   };
@@ -121,7 +121,6 @@ const TabSecurity = () => {
     setOffices(newOffices);
   };
 
-
   const handleImageUpload = async (event) => {
     const files = Array.from(event.target.files);
     const formData = new FormData();
@@ -133,16 +132,14 @@ const TabSecurity = () => {
       body: formData,
     });
     const data = await response.json();
-    setPlans(data.secure_url); 
-    setFloorPlanImage(data.secure_url); 
+    setPlans(data.secure_url);
+    setFloorPlanImage(data.secure_url);
   };
 
-
   const handleSubmit = () => {
-    const officeData = offices[0]; 
+    const officeData = offices[0];
 
     const productData = {
-      
       name: officeData.name,
       booking: [],
       description: officeData.description,
@@ -151,8 +148,9 @@ const TabSecurity = () => {
       type: officeData.type,
       images: images,
       plans: plans,
-      state: officeData.state
+      state: officeData.state,
     };
+
     console.log('Datos a enviar:', {
       collectionId: selectedcollectionId,
       productData,
@@ -162,7 +160,7 @@ const TabSecurity = () => {
       dispatch(createproducts({ collectionId: selectedcollectionId, productData }))
         .unwrap()
         .then((response) => {
-          toast.success('¡Oficina creada exitosamente!', {
+          toast.success('¡Producto creado exitosamente!', {
             position: 'top-right',
             autoClose: 3000,
             hideProgressBar: false,
@@ -171,19 +169,15 @@ const TabSecurity = () => {
             draggable: true,
             progress: undefined,
           });
-          console.log('Room created successfully:', response);
-          
-
+          console.log('Producto creado exitosamente:', response);
         })
         .catch((error) => {
-          toast.error('Error al crear la oficina.');
-          console.error('Error creating room:', error);
-          
+          toast.error('Error al crear el producto.');
+          console.error('Error al crear el producto:', error);
         });
     } else {
-      toast.error('No building selected');
-      console.error('No building selected');
-      
+      toast.error('No se ha seleccionado ninguna colección');
+      console.error('No se ha seleccionado ninguna colección');
     }
   };
 
@@ -191,9 +185,10 @@ const TabSecurity = () => {
     router.push('/Admin/tablaOficinas/');
   };
 
+
   return (
     <React.Fragment>
-      <Typography style={{ marginTop: '50px', marginLeft: '20px', textAlign: 'left' }} variant="h6" gutterBottom>
+      <Typography style={{ marginTop: '50px', marginLeft: '20px', textAlign: 'left', color:"salmon" }} variant="h4" gutterBottom>
         CREA UN NUEVO PRODUCTO
       </Typography>
       <CardContent sx={{ paddingBottom: 0 }}>
@@ -209,14 +204,130 @@ const TabSecurity = () => {
           </Grid>
         </Grid>
         <Box sx={{ marginTop: '20px' }}>
-          <Typography style={{ marginTop: '20px', marginBottom: '10px' }} variant="h6" gutterBottom>
-            Seleccione la coleccion donde creara el producto
-          </Typography>
-          <Box sx={{ marginBottom: '10px' }}>
-            <BuildingSelect2 onSelectBuilding={handleBuildingSelect} />
-          </Box>
+        <Typography style={{ marginTop: '20px', marginBottom: '10px' }} variant="h6" gutterBottom>
+          Seleccione la colección donde creará el producto
+        </Typography>
+        <Box sx={{ marginBottom: '10px' }}>
+          <CollectionSelect2 onSelectcollection={handleBuildingSelect} />
         </Box>
-        <Typography style={{ marginTop: '30px', marginBottom: '-12px' }} variant="h6" gutterBottom>
+      </Box>
+      <Typography style={{ marginTop: '30px', marginBottom: '50px', textAlign: "center", color:"salmon" }} variant="h5" gutterBottom>
+            SELECCIONA IMAGENES PARA TU NUEVO PRODUCTO
+          </Typography>
+      <Box style={{ marginLeft: '0px', marginBottom: '20px', marginTop: '20px' }}>
+        <Box sx={{ mt: 2 }}>
+          <Grid container spacing={7}>
+            <Grid item xs={12} md={6} sx={{ borderRight: '1px solid #ccc', paddingRight: '30px', marginTop: 4.8, marginBottom: 5 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', alignItems:"center" }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems:"center" }}>
+                  <ButtonStyled
+                    component="label"
+                    variant="contained"
+                    htmlFor="Offerta-Product-upload-image"
+                    sx={{ top: '-10px', marginLeft: '-20px' }}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      if (widgetRef.current) {
+                        widgetRef.current.open();
+                      } else {
+                        console.error('Widget de carga no está inicializado');
+                      }
+                    }}
+                  >
+                    Subir imágenes
+                  </ButtonStyled>
+                </Box>
+                <Box sx={{ marginBottom: '20px' }}>
+                  <Typography variant="body2" sx={{ marginTop: 2 }}>
+                    Sube imagenes del producto jpg o png.
+                  </Typography>
+                </Box>
+              </Box>
+              {images.length > 0 ? (
+                <React.Fragment>
+                  <Grid container spacing={1} sx={{ marginLeft: '6px' }}>
+                    {images.slice(0, 6).map((image, index) => (
+                      <Grid key={index} item xs={4}>
+                        <Box position="relative">
+                          <IconButton
+                            sx={{
+                              position: 'absolute',
+                              top: 2,
+                              right: 2,
+                              zIndex: 1,
+                              backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                            }}
+                            onClick={() => handleImageDelete(index)}
+                          >
+                            <CloseIcon />
+                          </IconButton>
+                          <ImgStyled
+                            src={image}
+                            alt={`Imagen ${index}`}
+                            sx={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '4px' }}
+                          />
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
+                  {images.length > 6 && (
+                    <Typography variant="body2" color="textSecondary">
+                      y {images.length - 6} más...
+                    </Typography>
+                  )}
+                </React.Fragment>
+              ) : (
+                <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: '40vh', // O ajusta esto según el tamaño del contenedor que desees
+                      width: '105%',
+                      marginLeft: "-20px",
+                      marginBottom:"-20px",
+                      padding: theme => theme.spacing(2), // Opcional: para agregar un poco de espacio alrededor
+                    }}
+                  >
+                    <ImgStyled src={imgSrc} alt="Imagen de oferta" />
+                  </Box>
+              )}
+            </Grid>
+            <Grid item xs={12} md={6} sx={{ paddingLeft: '20px', marginTop: 2.1, marginBottom: 3 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: '0px' }}>
+                <Box style={{ alignItems:"center" }}>
+                  <ButtonStyled
+                    sx={{ marginTop: '0px' }}
+                    component="label"
+                    variant="contained"
+                    htmlFor="plano-oficina-upload-image"
+                  >
+                    Imagen de oferta
+                    <input hidden type="file" onChange={handleImageUpload} accept="image/png, image/jpeg" id="plano-oficina-upload-image" />
+                  </ButtonStyled>
+                  <Typography variant="body2" sx={{ marginTop: 5, marginLeft: '-40px' }}>
+                    Imagen de oferta del producto  jpg o png.
+                  </Typography>
+                </Box>
+              </Box>
+              <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: '45vh', // O ajusta esto según el tamaño del contenedor que desees
+                      width: '100%',
+                      marginLeft: "-20px",
+                      padding: theme => theme.spacing(2), // Opcional: para agregar un poco de espacio alrededor
+                    }}
+                  >
+                    <ImgStyled src={floorPlanImage} alt="Imagen de oferta" />
+                  </Box>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+        <Typography style={{ marginTop: '30px', marginBottom: '12px', textAlign:"center",color:"salmon" }} variant="h4" gutterBottom>
             Datos del producto nuevo
           </Typography>
       </CardContent>
@@ -260,12 +371,12 @@ const TabSecurity = () => {
                         }
                       }}
                     >
-                      <MenuItem value="rojo">SS</MenuItem>
-                      <MenuItem value="Negro">S</MenuItem>
-                      <MenuItem value="Azul">L</MenuItem>
-                      <MenuItem value="Verde">X</MenuItem>
-                      <MenuItem value="Amarillo">XL</MenuItem>
-                      <MenuItem value="Violeta">XXL</MenuItem>
+                      <MenuItem value="ss">SS</MenuItem>
+                      <MenuItem value="s">S</MenuItem>
+                      <MenuItem value="L">L</MenuItem>
+                      <MenuItem value="X">X</MenuItem>
+                      <MenuItem value="XL">XL</MenuItem>
+                      <MenuItem value="XXL">XXL</MenuItem>
 
                     </Select>
                     {showMessage && (
@@ -275,16 +386,7 @@ const TabSecurity = () => {
                     )}
                   </FormControl>
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    label="Descripción"
-                    value={office.description}
-                    multiline
-                    rows={4}
-                    onChange={(e) => handleOfficeChange(e, index, 'description')}
-                  />
-                </Grid>
+
                 <Grid item xs={12} sm={6}>
                   <FormControl fullWidth>
                     <InputLabel id={`color-label-${index}`}>Colores disponibles</InputLabel>
@@ -346,102 +448,22 @@ const TabSecurity = () => {
                     </Select>
             </FormControl>
           </Grid>
+                          <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Descripción"
+                    value={office.description}
+                    multiline
+                    rows={4}
+                    onChange={(e) => handleOfficeChange(e, index, 'description')}
+                  />
+                </Grid>
               </Grid>
             </Box>
           ))}
         </Paper>
       </form>
-      <Typography style={{ marginTop: '30px', marginBottom: '50px', textAlign: "center" }} variant="h6" gutterBottom>
-            SELECCIONA IMAGENES PARA TU NUEVO PRODUCTO
-          </Typography>
-      <Box style={{ marginLeft: '0px', marginBottom: '20px', marginTop: '20px' }}>
-        <Box sx={{ mt: 2 }}>
-          <Grid container spacing={7}>
-            <Grid item xs={12} md={6} sx={{ borderRight: '1px solid #ccc', paddingRight: '30px', marginTop: 4.8, marginBottom: 5 }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: '30px' }}>
-                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: '16px' }}>
-                  <ButtonStyled
-                    component="label"
-                    variant="contained"
-                    htmlFor="plano-oficina-upload-image"
-                    sx={{ top: '-10px', marginLeft: '-20px' }}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      if (widgetRef.current) {
-                        widgetRef.current.open();
-                      } else {
-                        console.error('Widget de carga no está inicializado');
-                      }
-                    }}
-                  >
-                    Subir imágenes
-                  </ButtonStyled>
-                </Box>
-                <Box sx={{ marginBottom: '20px' }}>
-                  <Typography variant="body2" sx={{ marginTop: 2 }}>
-                    Sube imagenes de la oficina jpg o png.
-                  </Typography>
-                </Box>
-              </Box>
-              {images.length > 0 ? (
-                <React.Fragment>
-                  <Grid container spacing={1} sx={{ marginLeft: '6px' }}>
-                    {images.slice(0, 6).map((image, index) => (
-                      <Grid key={index} item xs={4}>
-                        <Box position="relative">
-                          <IconButton
-                            sx={{
-                              position: 'absolute',
-                              top: 2,
-                              right: 2,
-                              zIndex: 1,
-                              backgroundColor: 'rgba(255, 255, 255, 0.5)',
-                            }}
-                            onClick={() => handleImageDelete(index)}
-                          >
-                            <CloseIcon />
-                          </IconButton>
-                          <ImgStyled
-                            src={image}
-                            alt={`Imagen ${index}`}
-                            sx={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '4px' }}
-                          />
-                        </Box>
-                      </Grid>
-                    ))}
-                  </Grid>
-                  {images.length > 6 && (
-                    <Typography variant="body2" color="textSecondary">
-                      y {images.length - 6} más...
-                    </Typography>
-                  )}
-                </React.Fragment>
-              ) : (
-                <ImgStyled src={imgSrc} alt="Plano de Oficina" sx={{ width: '300px', marginLeft: '110px' }} />
-              )}
-            </Grid>
-            <Grid item xs={12} md={6} sx={{ paddingLeft: '20px', marginTop: 4.8, marginBottom: 3 }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: '0px' }}>
-                <Box style={{ marginLeft: '50px' }}>
-                  <ButtonStyled
-                    sx={{ marginTop: '5px' }}
-                    component="label"
-                    variant="contained"
-                    htmlFor="plano-oficina-upload-image"
-                  >
-                    Plano del piso
-                    <input hidden type="file" onChange={handleImageUpload} accept="image/png, image/jpeg" id="plano-oficina-upload-image" />
-                  </ButtonStyled>
-                  <Typography variant="body2" sx={{ marginTop: 5, marginLeft: '-80px' }}>
-                    Sube el plano de la oficina en formato jpg o png.
-                  </Typography>
-                </Box>
-              </Box>
-              <ImgStyled src={floorPlanImage} alt="Plano de Oficina" sx={{ width: '300px', marginLeft: '105px', marginTop: '18px' }} />
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
+
       <Grid item xs={12}>
         <Button
           style={{ marginTop: '30px', width: '95%', marginLeft: '20px', marginBottom: '23px' }}

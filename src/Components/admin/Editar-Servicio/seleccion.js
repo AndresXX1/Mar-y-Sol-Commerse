@@ -19,7 +19,7 @@ import CardContent from '@mui/material/CardContent';
 import { styled } from '@mui/material/styles';
 
 // ** Custom Component Imports
-import Selecteeed from '../../../pages/Admin/tablaOficinas/Select';
+import Selecteeed from '../../../pages/Admin/tablaProductos/Select';
 
 // ** Toastify Imports
 import { toast, ToastContainer } from 'react-toastify';

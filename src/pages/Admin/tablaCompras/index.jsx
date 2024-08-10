@@ -39,14 +39,14 @@ const BookingsComponent = () => {
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h4" gutterBottom>Tabla de reservas</Typography>
+      <Typography variant="h4" gutterBottom>Tabla de Compras</Typography>
       {loading ? (
         <Grid container justifyContent="center">
           <CircularProgress />
         </Grid>
       ) : error ? (
         <Typography variant="body1" color="error" gutterBottom>
-          Error al cargar las reservas: {error.message}
+          Error al cargar las compras: {error.message}
         </Typography>
       ) : (
         <TableContainer component={Paper}>

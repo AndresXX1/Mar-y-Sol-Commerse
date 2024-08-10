@@ -122,13 +122,13 @@ const navigation = (pathname) => {
 
     ]
   } else if (pathname == "/Admin" || pathname == "/Admin/tablaUsuario" 
-  || pathname === "/Admin/tablaReservas"
-     || pathname === "/Admin/tablaServicios"
+  || pathname === "/Admin/tablaCompras"
+     || pathname === "/Admin/tablaColecciones"
      || pathname === "/Admin/tablaResenias"
-     || pathname === "/Admin/Editar-Servicio"
+     || pathname === "/Admin/Nueva-Coleccion"
      || pathname === "/Admin/Nuevo-Servicio"
      || pathname === "/Admin/tablaPisos"
-     || pathname === "/Admin/tablaOficinas"
+     || pathname === "/Admin/tablaProductos"
      || pathname === "/Admin/perfilUser"
      || pathname === "/Admin/Config-User"
      ||  pathname == "/Cliente/Bookings/"
@@ -176,9 +176,9 @@ const navigation = (pathname) => {
 
       
       {
-        title: 'Administrar Edificios',
+        title: 'Colecciones y Productos',
         icon: EditIcon,
-        path: '/Admin/Editar-Servicio'
+        path: '/Admin/Nueva-Coleccion'
       },
     {
       sectionTitle: 'Configuracines'
@@ -192,24 +192,24 @@ const navigation = (pathname) => {
     },
 
     {
-      title: 'Reservas',
+      title: 'Carrito de compras',
       icon: SettingsIcon,
-      path: '/Admin/tablaReservas',
+      path: '/Admin/tablaCompras',
       
     },
 
     {
-      title: 'Edificios',
+      title: 'Colecciones',
       icon: SettingsIcon,
-      path: '/Admin/tablaServicios',
+      path: '/Admin/tablaColecciones',
       
     },
 
 
     {
-      title: 'Oficinas',
+      title: 'Productos',
       icon: SettingsIcon,
-      path: '/Admin/tablaOficinas',
+      path: '/Admin/tablaProductos',
       
     },
 

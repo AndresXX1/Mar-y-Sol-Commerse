@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Button, Select, MenuItem } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import EditIcon from '@mui/icons-material/Edit';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCollection, updatecollection } from '../../../Redux/reducer/reducer.js'; // Importa updatecollection
 
-const collectionsComponent = () => {
+const CollectionsComponent = () => {
   const [editablecollectionId, setEditablecollectionId] = useState(null);
   const [editablecollectionValues, setEditablecollectionValues] = useState({});
   const [modifiedFields, setModifiedFields] = useState({});
@@ -41,9 +41,7 @@ const collectionsComponent = () => {
       try {
         const updatedFields = Object.keys(modifiedFields).filter(key => key !== '_id').filter(key => key in editablecollectionValues).reduce((acc, key) => {
           acc[key] = editablecollectionValues[key];
-
           return acc;
-
         }, {});
   
         console.log('Objeto a enviar al backend:', updatedFields); 
@@ -60,21 +58,17 @@ const collectionsComponent = () => {
     setEditablecollectionId(null);
   };
 
-  
   return (
     <div>
-      <h2>Tabla de edificios</h2>
+      <h2>Todas las Colecciones</h2>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell>Nombre</TableCell>
-              <TableCell>Dirección</TableCell>
+              <TableCell>Temporada</TableCell>
               <TableCell>Descripción</TableCell>
-              <TableCell>Ciudad</TableCell>
-              <TableCell>País</TableCell>
-              <TableCell>Propietario</TableCell>
-              <TableCell>Número de pisos</TableCell>
+              <TableCell>Estado</TableCell>
               <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>
@@ -94,11 +88,11 @@ const collectionsComponent = () => {
                 <TableCell>
                   {editablecollectionId === collection._id ? (
                     <TextField
-                      value={editablecollectionValues.address}
-                      onChange={(e) => handleInputChange('address', e.target.value)}
+                      value={editablecollectionValues.seasson}
+                      onChange={(e) => handleInputChange('seasson', e.target.value)}
                     />
                   ) : (
-                    collection.address
+                    collection.seasson
                   )}
                 </TableCell>
                 <TableCell>
@@ -113,42 +107,16 @@ const collectionsComponent = () => {
                 </TableCell>
                 <TableCell>
                   {editablecollectionId === collection._id ? (
-                    <TextField
-                      value={editablecollectionValues.city}
-                      onChange={(e) => handleInputChange('city', e.target.value)}
-                    />
+                    <Select
+                      value={editablecollectionValues.state}
+                      onChange={(e) => handleInputChange('state', e.target.value)}
+                      fullWidth
+                    >
+                      <MenuItem value="Activo">Activo</MenuItem>
+                      <MenuItem value="Inactivo">Inactivo</MenuItem>
+                    </Select>
                   ) : (
-                    collection.city
-                  )}
-                </TableCell>
-                <TableCell>
-                  {editablecollectionId === collection._id ? (
-                    <TextField
-                      value={editablecollectionValues.country}
-                      onChange={(e) => handleInputChange('country', e.target.value)}
-                    />
-                  ) : (
-                    collection.country
-                  )}
-                </TableCell>
-                <TableCell>
-                  {editablecollectionId === collection._id ? (
-                    <TextField
-                      value={editablecollectionValues.owner}
-                      onChange={(e) => handleInputChange('owner', e.target.value)}
-                    />
-                  ) : (
-                    collection.owner
-                  )}
-                </TableCell>
-                <TableCell>
-                  {editablecollectionId === collection._id ? (
-                    <TextField
-                      value={editablecollectionValues.numberOfFloors}
-                      onChange={(e) => handleInputChange('numberOfFloors', e.target.value)}
-                    />
-                  ) : (
-                    collection.numberOfFloors
+                    collection.state
                   )}
                 </TableCell>
                 <TableCell>
@@ -170,4 +138,4 @@ const collectionsComponent = () => {
   );
 };
 
-export default collectionsComponent;
+export default CollectionsComponent;

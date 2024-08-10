@@ -68,7 +68,7 @@ const AccountSettings = () => {
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <StorefrontIcon />
-                <TabName>Crear nuevo servicio</TabName>
+                <TabName>Crear nueva coleccion</TabName>
               </Box>
             }
           />
@@ -77,7 +77,7 @@ const AccountSettings = () => {
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <EditIcon />
-                <TabName>Editar datos de servicio</TabName>
+                <TabName>Editar Coleccion</TabName>
               </Box>
             }
           />
@@ -87,7 +87,7 @@ const AccountSettings = () => {
             label={
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <StorefrontIcon />
-                <TabName>Oficinas</TabName>
+                <TabName>Crear nuevo producto</TabName>
               </Box>
             }
           />
